@@ -211,22 +211,35 @@ class QuizController extends Controller
     public function manage_soal_insert(createSoalRequest $request)
     {
         // proses upload gambar_soal
-        // $uploadedFile = $request->file('gambar_soal');
-        // $path = $uploadedFile->store('public/gambar_soal');
+        $gambar_soal = time().'.'.$request->gambar_soal->getClientOriginalExtension();
+        $request->gambar_soal->move(public_path('gambar_soal'), $gambar_soal);
         
+        // proses menyimpan gambar ke database
         // $insert = $this->soal->create($request->except('_token'));
-        $insert = $this->soal->create([
-            'soal' => $request->soal,
-            // 'gambar_soal' => $path,
-            'mst_topik_soal_id' => $request->mst_topik_soal_id
-        ]);
-        return $insert;
+        if($request->hasFile('gambar_soal')) {
+            $insert = $this->soal->create([
+                'soal' => $request->soal,
+                'gambar_soal' => $gambar_soal,
+                'mst_topik_soal_id' => $request->mst_topik_soal_id
+            ]);
+            return $insert;
+            // return response()->json(['success'=>'Berhasil']);
+        } else {
+            // return response()->json(['error'=>$request->errors()->all()]);
+        }
+        
     }
 
-
+    /**
+     * fungsi untuk menghapus soal
+     */
     public function manage_soal_delete(Request $request)
     {
         $s = $this->soal->findOrFail($request->id);
+        // menghapus gambar dari folder public
+        $image_path = public_path().'/'.'gambar_soal'.'/'.$s->gambar_soal;
+        unlink($image_path);
+        // menghapus dari database
         $s->delete();
         return 'ok';
     }

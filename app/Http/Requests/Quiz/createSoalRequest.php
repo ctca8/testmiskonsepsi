@@ -25,7 +25,7 @@ class createSoalRequest extends Request
     {
         return [
             'soal'  => 'required',
-            'gambar_soal' => 'required|file|max:2000' // max 2MB
+            'gambar_soal' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048' // max 2MB
         ];
     }
 }
