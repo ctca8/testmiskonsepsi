@@ -11,7 +11,7 @@
 	<script type="text/javascript">
 	$('#set_benar{{ $list->id }}').click(function(){
 			$.ajax({
-				url : '{{ route("backend.quiz.manage_soal.set_jawaban_benar") }}',
+				url : '{{ route("backend.quiz.manage_soal.set_alasan_benar") }}',
 				data : {id : '{{ $list->id }}', _token : '{!! csrf_token() !!}' },
 				type : 'post',
 				error: function(err){
@@ -34,7 +34,7 @@
 
 <i 	
 	data-toggle='tooltip'
-	title='edit jawaban'
+	title='edit alasan'
 	class='fa fa-pencil-square' 
 	id='edit{{ $list->id }}' 
 	style='cursor:pointer;'
@@ -43,7 +43,7 @@
 <script type="text/javascript">
 $('#edit{{ $list->id}}').click(function(){
 	$('.modal-body').html('loading... <i class="fa fa-spinner fa-spin"></i>');
-	$('.modal-body').load('{{ route("backend.quiz.manage_soal.edit_jawaban", [Request::segment(5), Request::segment(6), $list->id]) }}');
+	$('.modal-body').load('{{ route("backend.quiz.manage_soal.edit_alasan", [Request::segment(5), Request::segment(6), $list->id]) }}');
 });
 </script>
 
@@ -73,7 +73,7 @@ $('#del{{ $list->id }}').click(function(){
 		if(isConfirm){
 
 			$.ajax({
-				url : '{{ route("backend.quiz.manage_soal.del_jawaban") }}',
+				url : '{{ route("backend.quiz.manage_soal.del_alasan") }}',
 				data : {id : '{{ $list->id }}', _token : '{!! csrf_token() !!}' },
 				type : 'post',
 				error: function(err){				

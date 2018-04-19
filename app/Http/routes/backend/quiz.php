@@ -114,11 +114,31 @@ Route::group(['middleware' => ['auth']], function(){
 
 
 
-	/** kelola alasan jawaban */
+	/** kelola Alasan */
 	
 	post('quiz/manage_soal/insert_alasan', [
 		'as'	=> 'backend.quiz.manage_soal.insert_alasan',
 		'uses'	=> 'QuizController@manage_soal_insert_alasan',
+	]);
+
+	post('quiz/manage_soal/del_alasan', [
+		'as'	=> 'backend.quiz.manage_soal.del_alasan',
+		'uses'	=> 'QuizController@manage_soal_del_alasan',
+	]);
+
+	post('quiz/manage_soal/manage_soal_set_alasan_benar', [
+		'as'	=> 'backend.quiz.manage_soal.set_alasan_benar',
+		'uses'	=> 'QuizController@manage_soal_set_alasan_benar',
+	]);
+
+	get('quiz/manage_soal/manage_soal_edit_alasan/{mst_topik_soal_id}/{mst_soal_id}/{id}', [
+		'as'	=> 'backend.quiz.manage_soal.edit_alasan',
+		'uses'	=> 'QuizController@manage_soal_edit_alasan',
+	]);
+
+	post('quiz/manage_soal/manage_soal_update_alasan', [
+		'as'	=> 'backend.quiz.manage_soal.update_alasan',
+		'uses'	=> 'QuizController@manage_soal_update_alasan',
 	]);
 
 });

@@ -319,7 +319,7 @@ class QuizController extends Controller
     {
         $jawaban = $this->jawaban_soal->findOrFail($id);
         $soal = $this->soal->findOrFail($mst_soal_id);
-        $vars = compact('soal', 'fungsi', 'jawaban');        
+        $vars = compact('soal', 'fungsi', 'jawaban');
         return view($this->base_view.'manage_soal.popup.edit_jawaban', $vars);
     }
 
@@ -330,6 +330,19 @@ class QuizController extends Controller
      */
     public function manage_soal_update_jawaban(Request $request)
     {
+        /**
+         * jika kunci jawaban mengalami perubahan
+         * maka semua kunci jawaban awal diset menjadi 0 terlebih dahulu
+         * agar tidak terjadi terdapat dua kunci jawaban
+         */
+        if($request->is_benar == 1){
+            $all_jawaban = $this->jawaban_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+            foreach($all_jawaban as $list){
+                $list->is_benar = 0;
+                $list->save();
+            }
+        }
+        
         $update_jawaban = $this->jawaban_soal
                                ->where('id', '=', $request->id)
                                ->update($request->except('_token'));
@@ -380,8 +393,87 @@ class QuizController extends Controller
             $js->save();
         }
 
-
         return $insert_alasan;
+    }
+
+
+     /**
+     * POST hapus salah satu alasan soal
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function manage_soal_del_alasan(Request $request)
+    {
+        \Session::flash('pesan_sukses_alasan', 'data telah terhapus');
+        $js = $this->alasan_soal->findOrFail($request->id);
+        $js->delete();
+        return 'ok';
+    }
+
+
+     /**
+     * GET edit salah satu alasan soal
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function manage_soal_edit_alasan($mst_topik_soal_id, $mst_soal_id, $id, Request $request, Fungsi $fungsi)
+    {
+        $alasan = $this->alasan_soal->findOrFail($id);
+        $soal = $this->soal->findOrFail($mst_soal_id);
+        $vars = compact('soal', 'fungsi', 'alasan');
+        return view($this->base_view.'manage_soal.popup.edit_alasan', $vars);
+    }
+
+
+    /**
+     * @param  POST update simpan alasan jawaban
+     * @return [type]
+     */
+    public function manage_soal_update_alasan(Request $request)
+    {
+        /**
+         * jika kunci jawaban mengalami perubahan
+         * maka semua kunci jawaban awal diset menjadi 0 terlebih dahulu
+         * agar tidak terjadi terdapat dua kunci jawaban
+         */
+        if($request->is_benar == 1){
+            $all_alasan = $this->alasan_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+            foreach($all_alasan as $list){
+                $list->is_benar = 0;
+                $list->save();
+            }
+        }
+        
+        $update_alasan = $this->alasan_soal
+                               ->where('id', '=', $request->id)
+                               ->update($request->except('_token'));
+        return $update_alasan;
+    }
+
+
+      /**
+     * POST set untuk memilih alasan yg benar pada soal
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function manage_soal_set_alasan_benar(Request $request)
+    {
+        // ambil data alasan_soal berdasarkan id_alasan_soal yang akan dijadikan kunci jawaban
+        $js = $this->alasan_soal->findOrFail($request->id);
+
+        // ambil semua data alasan berdasarkan id_soal untuk dilakukan pengeditan
+        $all_js = $this->alasan_soal->where('mst_soal_id', '=', $js->mst_soal_id)->get();
+        
+        // semua nilai is_benar pada data_alasan diset menjadi 0 (salah)
+        foreach($all_js as $list){
+            $list->is_benar = 0;
+            $list->save();
+        }
+
+        // data alasan_soal terpilih (dijadikan kunci jawaban) diset is_benar menjadi 1 (benar)
+        $js->is_benar = 1;
+        $js->save();
+        return 'ok';
     }
 
 
