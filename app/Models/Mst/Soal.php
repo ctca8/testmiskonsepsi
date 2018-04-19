@@ -4,6 +4,7 @@ namespace App\Models\Mst;
 
 use App\Models\Mst\JawabanSiswa;
 use App\Models\Mst\JawabanSoal;
+use App\Models\Mst\AlasanSoal;
 use App\Models\Mst\TopikSoal;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -12,17 +13,25 @@ class Soal extends Eloquent{
 	protected $table = 'mst_soal';
     protected $fillable = ['soal', 'gambar_soal', 'mst_topik_soal_id'];
 
-
+    /** mengambil data soal berdasarkan topik soal */
     public function mst_topik_soal()
     {
     	return $this->belongsTo(TopikSoal::class, 'mst_topik_soal_id');
     }
 
+    /** mengambil data jawaban berdasarkan id_soal */
     public function mst_jawaban_soal()
     {
     	return $this->hasMany(JawabanSoal::class, 'mst_soal_id');
     }
 
+    /** mengambil data alasan berdasarkan id_soal */
+    public function mst_alasan_soal()
+    {
+    	return $this->hasMany(AlasanSoal::class, 'mst_soal_id');
+    }
+
+    /** mengambil data jawaban siswa berdasarkan id_soal */
     public function mst_jawaban_siswa()
     {
         return $this->hasOne(JawabanSiswa::class, 'mst_soal_id');

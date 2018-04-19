@@ -6,10 +6,12 @@ use App\Helpers\Fungsi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\Quiz\createJawabanSoal;
+use App\Http\Requests\Quiz\createAlasanSoal;
 use App\Http\Requests\Quiz\createSoalRequest;
 use App\Http\Requests\Quiz\createTopikQuizRequest;
 use App\Models\Mst\JawabanSiswa;
 use App\Models\Mst\JawabanSoal;
+use App\Models\Mst\AlasanSoal;
 use App\Models\Mst\KelasUser;
 use App\Models\Mst\Soal;
 use App\Models\Mst\TopikSoal;
@@ -27,13 +29,15 @@ class QuizController extends Controller
     protected $topik_soal;
     protected $soal;
     protected $jawaban_soal;
+    protected $alasan_soal;
 
     public function __construct(Kelas $kelas,
     							User $user, 
     							TingkatKesulitan $tingkat_kesulitan,
     							TopikSoal $topik_soal, 
     							Soal $soal, 
-                                JawabanSoal $jawaban_soal
+                                JawabanSoal $jawaban_soal,
+                                AlasanSoal $alasan_soal
     							)
     {
     	$this->soal = $soal;
@@ -42,6 +46,7 @@ class QuizController extends Controller
     	view()->share('backend_quiz_index', true);
     	$this->kelas = $kelas;
         $this->jawaban_soal = $jawaban_soal;
+        $this->alasan_soal = $alasan_soal;
     	$this->user = $user;
     	$this->topik_soal = $topik_soal;
     }
@@ -177,8 +182,7 @@ class QuizController extends Controller
      */
     public function manage_soal_add($mst_topik_soal_id){
         return view($this->base_view.'manage_soal.popup.add');
-        // return view($this->base_view.'manage_soal.popup.addcoba');
-    }   
+    }
 
     /**
      * @param  GET edit isi soal
@@ -198,6 +202,12 @@ class QuizController extends Controller
      */
     public function manage_soal_update(createSoalRequest $request)
     {
+        /**
+         * MOHON PERHATIAN
+         * untuk edit soal belum dibuat penanganan untuk gambarnya ya.
+         * jangan lupa untuk dikerjakan hlo ya.
+         */
+        
         $update = $this->soal->where('id', '=', $request->id)
                        ->update($request->except('_token'));
         return $update;
@@ -226,6 +236,7 @@ class QuizController extends Controller
             // return response()->json(['success'=>'Berhasil']);
         } else {
             // return response()->json(['error'=>$request->errors()->all()]);
+            return $insert;
         }
         
     }
@@ -258,6 +269,7 @@ class QuizController extends Controller
         return view($this->base_view.'manage_soal.popup.add_jawaban', $vars);
     }
 
+
     /**
      * insert jawaban untuk masing2 soal
      * @param  createJawabanSoal $request [description]
@@ -265,7 +277,7 @@ class QuizController extends Controller
      */
     public function manage_soal_insert_jawaban(createJawabanSoal $request)
     {
-        \Session::flash('pesan_sukses', 'data telah berhasil ditambahkan');
+        \Session::flash('pesan_sukses', 'Jawaban telah berhasil ditambahkan');
         $insert_jawaban = $this->jawaban_soal->create($request->except('_token'));
 
         if($request->is_benar == 1){
@@ -325,9 +337,7 @@ class QuizController extends Controller
     }
 
 
-
-
-    /**
+      /**
      * POST set untuk memilih jawaban yg benar pada soal
      * @param  Request $request [description]
      * @return [type]           [description]
@@ -346,6 +356,32 @@ class QuizController extends Controller
         $js->is_benar = 1;
         $js->save();
         return 'ok';
+    }
+
+    
+    /**
+     * insert alasan untuk masing2 soal
+     * @param  createAlasanSoal $request [description]
+     * @return [type]                     [description]
+     */
+    public function manage_soal_insert_alasan(createAlasanSoal $request)
+    {
+        \Session::flash('pesan_sukses_alasan', 'Alasan telah berhasil ditambahkan');
+        $insert_alasan = $this->alasan_soal->create($request->except('_token'));
+
+        if($request->is_benar == 1){
+            $all_js = $this->alasan_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+            foreach($all_js as $list){
+                $list->is_benar = 0;
+                $list->save();
+            }
+            $js = $this->alasan_soal->findOrFail($insert_alasan->id);
+            $js->is_benar = 1;
+            $js->save();
+        }
+
+
+        return $insert_alasan;
     }
 
 

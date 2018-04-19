@@ -3,6 +3,7 @@
 namespace App\Models\Mst;
 
 use App\Models\Mst\Soal;
+use App\Models\Mst\JawabanSiswa;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 

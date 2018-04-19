@@ -81,7 +81,6 @@ Route::group(['middleware' => ['auth']], function(){
 		'uses'	=> 'QuizController@manage_soal_add_jawaban',
 	]);
 
-
 	post('quiz/manage_soal/insert_jawaban', [
 		'as'	=> 'backend.quiz.manage_soal.insert_jawaban',
 		'uses'	=> 'QuizController@manage_soal_insert_jawaban',
@@ -117,6 +116,10 @@ Route::group(['middleware' => ['auth']], function(){
 
 	/** kelola alasan jawaban */
 	
+	post('quiz/manage_soal/insert_alasan', [
+		'as'	=> 'backend.quiz.manage_soal.insert_alasan',
+		'uses'	=> 'QuizController@manage_soal_insert_alasan',
+	]);
 
 });
 
