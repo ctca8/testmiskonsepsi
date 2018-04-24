@@ -49,13 +49,28 @@ Route::group(['middleware' => ['auth', 'hanya_siswa']], function(){
  	get('quiz_siswa/lihat_hasil_nilai/{mst_topik_soal_id}', [
 		'as'	=> 'backend.quiz_siswa.lihat_hasil_nilai',
 		'uses'	=> 'QuizSiswaController@lihat_hasil_nilai',
-	]);   
+	]);
  
  
  	post('quiz_siswa/submit_jawaban', [
 		'as'	=> 'backend.quiz_siswa.submit_jawaban',
 		'uses'	=> 'QuizSiswaController@submit_jawaban',
-	]);   
+	]);
+	
+	post('quiz_siswa/submit_konfirmasi_jawaban', [
+		'as'	=> 'backend.quiz_siswa.submit_konfirmasi_jawaban',
+		'uses'	=> 'QuizSiswaController@submit_konfirmasi_jawaban',
+	]);
+
+	post('quiz_siswa/submit_alasan', [
+		'as'	=> 'backend.quiz_siswa.submit_alasan',
+		'uses'	=> 'QuizSiswaController@submit_alasan',
+	]);
+
+	post('quiz_siswa/submit_konfirmasi_alasan', [
+		'as'	=> 'backend.quiz_siswa.submit_konfirmasi_alasan',
+		'uses'	=> 'QuizSiswaController@submit_konfirmasi_alasan',
+	]);
  
  
 });

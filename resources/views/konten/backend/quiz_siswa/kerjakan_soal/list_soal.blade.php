@@ -1,4 +1,6 @@
 <script type="text/javascript">
+	
+	// fungsi untuk mensubmit jawaban siswa
 	function submit_jawaban(mst_soal_id, mst_jawaban_soal_id){
 		form_data = {
 			mst_soal_id : mst_soal_id,
@@ -7,6 +9,67 @@
 		}
 		$.ajax({
 			url : '{!! route("backend.quiz_siswa.submit_jawaban") !!}',
+			data : form_data,
+			type : 'post',
+			error:function(err){
+				swal('error', 'terjadi kesalahan pada sisi server!', 'error');
+			},
+			success:function(ok){
+
+			}
+		})
+	}
+
+
+	// fungsi untuk mensubmit alasan dari jawaban siswa
+	function submit_alasan(mst_soal_id, mst_alasan_soal_id){
+		form_data = {
+			mst_soal_id : mst_soal_id,
+			mst_alasan_soal_id : mst_alasan_soal_id,
+			_token : '{!! csrf_token() !!}'
+		}
+		$.ajax({
+			url : '{!! route("backend.quiz_siswa.submit_alasan") !!}',
+			data : form_data,
+			type : 'post',
+			error:function(err){
+				swal('error', 'terjadi kesalahan pada sisi server!', 'error');
+			},
+			success:function(ok){
+
+			}
+		})
+	}
+
+	// fungsi untuk mensubmit keyakinan jawaban siswa
+	function submit_konfirmasi_jawaban(mst_soal_id, is_yakin){
+		form_data = {
+			mst_soal_id : mst_soal_id,
+			is_yakin : is_yakin,
+			_token : '{!! csrf_token() !!}'
+		}
+		$.ajax({
+			url : '{!! route("backend.quiz_siswa.submit_konfirmasi_jawaban") !!}',
+			data : form_data,
+			type : 'post',
+			error:function(err){
+				swal('error', 'terjadi kesalahan pada sisi server!', 'error');
+			},
+			success:function(ok){
+
+			}
+		})
+	}
+
+	// fungsi untuk mensubmit keyakinan alasan siswa
+	function submit_konfirmasi_alasan(mst_soal_id, is_yakin){
+		form_data = {
+			mst_soal_id : mst_soal_id,
+			is_yakin : is_yakin,
+			_token : '{!! csrf_token() !!}'
+		}
+		$.ajax({
+			url : '{!! route("backend.quiz_siswa.submit_konfirmasi_alasan") !!}',
 			data : form_data,
 			type : 'post',
 			error:function(err){

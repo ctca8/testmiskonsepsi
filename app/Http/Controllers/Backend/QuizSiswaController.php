@@ -10,6 +10,7 @@ use App\Helpers\Fungsi;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Mst\JawabanSiswa;
+use App\Models\Mst\AlasanSiswa;
 use App\Models\Mst\KelasUser;
 use App\Models\Mst\PengerjaanSoal;
 use App\Models\Mst\Soal;
@@ -27,6 +28,7 @@ class QuizSiswaController extends Controller
     protected $soal;
     protected $fungsi;
     protected $jawaban_siswa;
+    protected $alasan_siswa;
 
     public function __construct( KelasUser $kelas_user,  
     							 Kelas $kelas,  
@@ -34,11 +36,13 @@ class QuizSiswaController extends Controller
                                  PengerjaanSoal $pengerjaan_soal, 
                                  Soal $soal,
                                  JawabanSiswa $jawaban_siswa,
+                                 AlasanSiswa $alasan_siswa,
                                  Fungsi $fungsi
     							)
     {
         $this->fungsi           = $fungsi;
         $this->jawaban_siswa    = $jawaban_siswa;
+        $this->alasan_siswa     = $alasan_siswa;
         $this->soal             = $soal;
         $this->pengerjaan_soal  = $pengerjaan_soal;
     	$this->topik_soal 	    = $topik_soal;
@@ -100,7 +104,7 @@ class QuizSiswaController extends Controller
         $pengerjaan_soal = $this->pengerjaan_soal->getOnePengerjaan($mst_topik_soal_id, \Auth::user()->id);
         // variabel untuk menampung soal
         // memanggil fungsi getKerjakanSoal pada model soal
-        $soal = $this->soal->getKerjakanSoal($mst_topik_soal_id);        
+        $soal = $this->soal->getKerjakanSoal($mst_topik_soal_id);
         $fungsi = $this->fungsi;
         $vars = compact('topik_soal', 'pengerjaan_soal', 'soal', 'fungsi');
         return view($this->base_view.'kerjakan_soal.index', $vars);
@@ -210,6 +214,64 @@ class QuizSiswaController extends Controller
     }
 
 
+    /**
+     * POST submit konfirmasi jawaban per soal
+     * @return [type] [description]
+     */
+    public function submit_konfirmasi_jawaban(Request $request)
+    {
+        $check_jawaban = $this->jawaban_siswa
+                              ->where('mst_user_id', '=', \Auth::user()->id)
+                              ->where('mst_soal_id', '=', $request->mst_soal_id)
+                              ->first();
+        $check_jawaban->is_yakin = $request->is_yakin;
+        $check_jawaban->save();
+        return $check_jawaban;
+
+    }
+
+/**
+     * POST submit alasan per soal
+     * @return [type] [description]
+     */
+    public function submit_alasan(Request $request)
+    {
+        $check_alasan = $this->alasan_siswa
+                              ->where('mst_user_id', '=', \Auth::user()->id)
+                              ->where('mst_soal_id', '=', $request->mst_soal_id)
+                              ->first();
+        if(count($check_alasan)>0){
+            $check_alasan->mst_alasan_soal_id = $request->mst_alasan_soal_id;
+            $check_alasan->save();
+            return $check_alasan;
+        }else{
+            $data_alasan = [
+                'mst_alasan_soal_id'   => $request->mst_alasan_soal_id,
+                'mst_user_id'           => \Auth::user()->id,
+                'mst_soal_id'           => $request->mst_soal_id
+            ];
+            $insert = $this->alasan_siswa->create($data_alasan);
+            return $insert;
+        }
+
+    }
+
+
+    /**
+     * POST submit konfirmasi alasan per soal
+     * @return [type] [description]
+     */
+    public function submit_konfirmasi_alasan(Request $request)
+    {
+        $check_alasan = $this->alasan_siswa
+                              ->where('mst_user_id', '=', \Auth::user()->id)
+                              ->where('mst_soal_id', '=', $request->mst_soal_id)
+                              ->first();
+        $check_alasan->is_yakin = $request->is_yakin;
+        $check_alasan->save();
+        return $check_alasan;
+
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Models\Mst;
 
 use App\Models\Mst\JawabanSiswa;
+use App\Models\Mst\AlasanSiswa;
 use App\Models\Mst\JawabanSoal;
 use App\Models\Mst\AlasanSoal;
 use App\Models\Mst\TopikSoal;
@@ -36,6 +37,12 @@ class Soal extends Eloquent{
     {
         return $this->hasOne(JawabanSiswa::class, 'mst_soal_id');
     }
+
+     /** mengambil data alsan siswa berdasarkan id_soal */
+     public function mst_alasan_siswa()
+     {
+         return $this->hasOne(AlasanSiswa::class, 'mst_soal_id');
+     }
 
 
     /**

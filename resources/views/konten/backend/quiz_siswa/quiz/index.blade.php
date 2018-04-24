@@ -27,7 +27,7 @@ function update_waktu_pengerjaan(value, mst_topik_soal_id){
 
 		}
 	})
-}	
+}
 	
 </script>
 

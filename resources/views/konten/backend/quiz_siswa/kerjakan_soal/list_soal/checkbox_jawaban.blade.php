@@ -7,8 +7,6 @@
 		   checked="true" 
 	   @endif
 >
- 
- 
 
 <script type="text/javascript">
 
