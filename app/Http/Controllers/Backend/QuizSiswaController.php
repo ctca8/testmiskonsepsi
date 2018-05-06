@@ -163,7 +163,7 @@ class QuizSiswaController extends Controller
         $fungsi = $this->fungsi;
         $lihat_hasil = true;
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
-        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil'); 
+        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil');
         return view($this->base_view.'lihat_hasil.index', $vars);
     }
 

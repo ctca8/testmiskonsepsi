@@ -29,18 +29,14 @@ class JawabanSiswa extends Eloquent{
         $jawaban_benar = 0; 
 
         $soal = Soal::where('mst_topik_soal_id', '=', $mst_topik_soal_id)->get();
-             foreach($soal as $list){
-               if(count($list->mst_jawaban_siswa)>0){
-                if($list->mst_jawaban_siswa->mst_jawaban_soal->is_benar == 1 ){
-                    $jawaban_benar = $jawaban_benar+1;
+            foreach($soal as $list){
+                if(count($list->mst_jawaban_siswa)>0){
+                    if($list->mst_jawaban_siswa->mst_jawaban_soal->is_benar == 1 ){
+                        $jawaban_benar = $jawaban_benar+1;
+                    }
                 }
-               }
-
-             }
-
- 
+            }
         return $jawaban_benar;
-
     } 
 
 

@@ -14,35 +14,45 @@ class Soal extends Eloquent{
 	protected $table = 'mst_soal';
     protected $fillable = ['soal', 'gambar_soal', 'mst_topik_soal_id'];
 
-    /** mengambil data soal berdasarkan topik soal */
+    /**
+     * mengambil data soal berdasarkan topik soal
+     */
     public function mst_topik_soal()
     {
     	return $this->belongsTo(TopikSoal::class, 'mst_topik_soal_id');
     }
 
-    /** mengambil data jawaban berdasarkan id_soal */
+    /** 
+     * mengambil data jawaban berdasarkan id_soal
+     */
     public function mst_jawaban_soal()
     {
     	return $this->hasMany(JawabanSoal::class, 'mst_soal_id');
     }
 
-    /** mengambil data alasan berdasarkan id_soal */
+    /** 
+     * mengambil data alasan berdasarkan id_soal 
+     */
     public function mst_alasan_soal()
     {
     	return $this->hasMany(AlasanSoal::class, 'mst_soal_id');
     }
 
-    /** mengambil data jawaban siswa berdasarkan id_soal */
+    /**
+     * mengambil data jawaban siswa berdasarkan id_soal 
+     * seharusnya ada parameter master user id
+     * jika tidak, makan akan rancu dalam pengampilan jawabanya
+    */
     public function mst_jawaban_siswa()
     {
         return $this->hasOne(JawabanSiswa::class, 'mst_soal_id');
     }
 
-     /** mengambil data alsan siswa berdasarkan id_soal */
-     public function mst_alasan_siswa()
-     {
-         return $this->hasOne(AlasanSiswa::class, 'mst_soal_id');
-     }
+    /** mengambil data alsan siswa berdasarkan id_soal */
+    public function mst_alasan_siswa()
+    {
+        return $this->hasOne(AlasanSiswa::class, 'mst_soal_id');
+    }
 
 
     /**
