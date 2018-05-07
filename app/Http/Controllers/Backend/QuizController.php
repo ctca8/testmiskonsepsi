@@ -220,7 +220,7 @@ class QuizController extends Controller
      */
     public function manage_soal_insert(createSoalRequest $request)
     {
-        // proses upload gambar_soal
+        // // proses upload gambar_soal
         $gambar_soal = time().'.'.$request->gambar_soal->getClientOriginalExtension();
         $request->gambar_soal->move(public_path('gambar_soal'), $gambar_soal);
         
@@ -239,6 +239,14 @@ class QuizController extends Controller
             return $insert;
         }
         
+        // $msg = array(
+        //     'success' => true,
+        //     'message' => "images uploaded",
+        //     'gambar' => $gambar_soal,
+        //     "soal" => $request->soal,
+        //     "mst_topik_soal_id" => $request->mst_topik_soal_id,
+        // );
+        // exit(json_encode($msg));
     }
 
     /**
