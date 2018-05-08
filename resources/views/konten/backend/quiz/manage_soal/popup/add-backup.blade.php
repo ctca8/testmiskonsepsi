@@ -42,10 +42,7 @@
 <script type="text/javascript">
 	$(function() {
 		var files = $("#files");
-		
-		$('#soal').on('change', function(e){
-			var soal = $('#soal').val();
-		});
+		var soal = $('#soal');
 
 		var form_data = {
 			soal : soal,
@@ -71,7 +68,7 @@
 			else {
 				$("#pesan").html("");
 				// data.submit();
-				console.log(soal);
+				console.log(form_data.soal.val());
 			}
 		}).on('fileuploaddone', function(e, data) {
 			swal({
@@ -125,7 +122,7 @@ $('#simpan').click(function(){
 // $('#simpan').on("click", function(){
 	$('#pesan').removeClass('alert alert-danger animated shake').html('');
 
-// var gambar_soal = $("#gambar_soal")[0];
+// var gambar_soal = $("#gambar_soal");
 // var soal = $('#soal').val();
 
 // var form_data = new FormData();
@@ -135,11 +132,9 @@ $('#simpan').click(function(){
 // 	gambar_soal : gambar_soal,
 // 	mst_topik_soal_id : {!! Request::segment(5) !!},
 //  	_token : '{!! csrf_token() !!}'
-// }
+// };
 
-// var form_data = $('#uploadsoal').serialize();
-
-$('#simpan').attr('disabled', 'disabled');
+	$('#simpan').attr('disabled', 'disabled');
 	$.ajax({
 		url : '{{ route("backend.quiz.manage_soal.insert") }}',
 		data : form_data,

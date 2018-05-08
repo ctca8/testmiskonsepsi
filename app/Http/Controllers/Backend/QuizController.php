@@ -239,6 +239,7 @@ class QuizController extends Controller
             return $insert;
         }
         
+        // // for debuging
         // $msg = array(
         //     'success' => true,
         //     'message' => "images uploaded",
