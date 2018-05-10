@@ -106,7 +106,9 @@ Route::group(['middleware' => ['auth']], function(){
 		'uses'	=> 'QuizController@manage_soal_update_jawaban',
 	]);
 
-
+	/**
+	 * lihat nilai siswa sekelas
+	 */
 	get('quiz/manage_siswa/view_nilai/{mst_topik_soal_id}', [
 		'as'	=> 'backend.quiz.manage_siswa.view_nilai',
 		'uses'	=> 'QuizController@manage_siswa_view_nilai',

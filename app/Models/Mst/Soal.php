@@ -39,16 +39,18 @@ class Soal extends Eloquent{
     }
 
     /**
-     * mengambil data jawaban siswa berdasarkan id_soal 
-     * seharusnya ada parameter master user id
-     * jika tidak, makan akan rancu dalam pengampilan jawabanya
-    */
+     * realasi one to one ke JawabanSiswa
+     * untuk mengambil data jawaban yang dipilih oleh siswa
+     */
     public function mst_jawaban_siswa()
     {
         return $this->hasOne(JawabanSiswa::class, 'mst_soal_id');
     }
 
-    /** mengambil data alsan siswa berdasarkan id_soal */
+    /** 
+     * relasi one to one ke AlasanSiswa
+     * untuk mengambil alasan yang dipilih oleh siswa
+     */
     public function mst_alasan_siswa()
     {
         return $this->hasOne(AlasanSiswa::class, 'mst_soal_id');

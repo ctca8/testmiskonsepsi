@@ -22,10 +22,20 @@ class AlasanSiswa extends Eloquent {
     	return $this->belongsTo(Soal::class, 'mst_soal_id');
     }
 
-
     public function mst_alasan_soal()
     {
     	return $this->belongsTo(AlasanSoal::class, 'mst_alasan_soal_id');
+    }
+
+    /**
+     * mencari alasan siswa berdasarkan id_soal dan id_user
+     */
+    public function alasan_siswa($mst_soal_id, $mst_user_id){
+        $jawaban_siswa = $this
+                            ->where('mst_soal_id', '=', $mst_soal_id)           
+                            ->where('mst_user_id', '=', $mst_user_id)
+                            ->first();
+        return $jawaban_siswa;
     }
 
 
