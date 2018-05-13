@@ -72,7 +72,7 @@ class KelasGuruController extends Controller
 		$insert_kelas = $this->kelas->create($request->except('_token'));
 		$k = $this->kelas->findOrFail($insert_kelas->id);
 		// generate kode kelas masih gagal
-		$k->kode_kelas = \Hashids::encode($insert_kelas->id.''.date('YmdHis'));
+		$k->kode_kelas = \Hashids::encode($insert_kelas->id);
 		$k->save();
 		return $k;
 	}
@@ -103,7 +103,7 @@ class KelasGuruController extends Controller
 	public function regenerate_kode_kelas(Request $request)
 	{
 		$k = $this->kelas->findOrFail($request->id);
-		$k->kode_kelas = \Hashids::encode($request->id.''.date('YmdHis'));
+		$k->kode_kelas = \Hashids::encode($request->id);
 		$k->save();
 		return $k;
 	}

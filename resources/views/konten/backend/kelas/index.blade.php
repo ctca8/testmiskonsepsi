@@ -12,7 +12,6 @@
 
 
 
-
 	<div >
 		@include($base_view.'list_data')	
 	</div>
