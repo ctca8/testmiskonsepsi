@@ -1,7 +1,6 @@
-## SISTEM BANK SOAL DAN UJIAN ONLINE
+## SISTEM INFORMASI UJIAN ONLINE MISKONSEPSI
 
+Untuk melaukan penelitian miskonsepsi pada siswa ketika mengerjakan ujian.
+Menggunakan metode Kombinasi Jawaban Four-Tier Test.
 
- 
-Sistem Bank Soal dan Ujian Online, menggunakan PHP dan mysql.
-
-untuk SMA, MA, atau Sederajat
+Big Thanks to https://github.com/r3k4
