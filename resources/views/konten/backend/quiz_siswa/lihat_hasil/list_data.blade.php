@@ -4,6 +4,10 @@
 <ol start="{!! $i !!}">
 	
 	@foreach($soal as $list)
+		{{-- mengambil jawaban siswa berdasarkan id_soal dan id_user	 --}}
+		<?php $jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id) ?>
+		{{-- mengambil alasan siswa berdasarkan id_soal dan id_user --}}
+		<?php $alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id) ?>
 
 	<li style="font-size:15px">
 		{!! $list->soal !!} 
@@ -39,6 +43,18 @@
 	<div class="row">
 		<div class="col-md-6">
 			@include($base_view.'lihat_hasil.komponen.alasan_terpilih')		
+		</div>
+	</div>
+
+	<?php 
+		// untuk mengecek apakah jawaban siswa miskonsepsi atau tidak
+		$miskonsepsi = $fungsi->cek_miskonsepsi($jawaban->mst_jawaban_soal->is_benar, $jawaban->is_yakin, $alasan->mst_alasan_soal->is_benar, $alasan->is_yakin);
+	?>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="alert alert-success">
+				<h3 style="text-align: center" >{!! $miskonsepsi !!}</h3>
+			</div>
 		</div>
 	</div>
 	<hr>

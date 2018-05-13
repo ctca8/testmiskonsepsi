@@ -309,7 +309,71 @@ public function alphaID($in, $to_num = false, $pad_up = false, $passKey = null)
     }
     return $n1.'.'.$n2;
   }
- 
-        
-        
-}
+
+  /**
+   * fungsi ini digunakan untuk melakukan pengecekan
+   * apakah jawaban siswa miskonsepsi atau tidak
+   * 
+   * parameter yang diminta adalah jawaban, keyakinan jawaban, alasan, keyakinan alasan
+   * nilai kembalian berupa string 
+   */
+  public function cek_miskonsepsi($jawaban, $is_jawaban, $alasan, $is_alasan)
+  {
+    if($jawaban == 1) {
+        if($is_jawaban = 1) {
+            if($alasan == 1) {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Paham";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            } else {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Miskonsepsi/Error";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            }
+        } else {
+            if($alasan == 1) {
+                $is_miskonsepsi = "Tidak Paham Konsep";
+            } else {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Miskonsepsi/Error";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            }
+        }
+    } else {
+        if($is_jawaban == 1) {
+            if($alasan == 1) {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Error";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            } else {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Miskonsepsi";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            }
+        } else {
+            if($alasan == 1) {
+                $is_miskonsepsi = "Tidak Paham Konsep";
+            } else {
+                if($is_alasan == 1) {
+                    $is_miskonsepsi = "Miskonsepsi";
+                } else {
+                    $is_miskonsepsi = "Tidak Paham Konsep";
+                }
+            }
+        }
+    } // end of decision
+
+    return $is_miskonsepsi;
+  }
+      
+} // end class

@@ -1,4 +1,4 @@
-<?php $jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id) ?>
+<?php //$jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id) ?>
 Jawaban yang dipilih :
 <br>
 @if(count($jawaban)>0)

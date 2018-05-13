@@ -1,4 +1,4 @@
-<?php $alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id) ?>
+<?php //$alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id) ?>
 Alasan yang dipilih :
 <br>
 @if(count($alasan)>0)
