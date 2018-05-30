@@ -74,10 +74,11 @@ class KelasSiswaController extends Controller
         if(count($k)>0){
             $ku = $this->kelas_user
                        ->where('mst_user_id', '=', \Auth::user()->id)
+                       ->where('ref_kelas_id', '=', $k->id)
                        ->first();
-                if(count($ku)>0){
-                    return 2;                    
-                }
+            if(count($ku)>0){
+                return 2;                    
+            }
 
             $data_kelas_user = ['mst_user_id' => \Auth::user()->id, 'ref_kelas_id' => $k->id];
             $this->kelas_user->create($data_kelas_user);

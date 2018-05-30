@@ -320,7 +320,7 @@ public function alphaID($in, $to_num = false, $pad_up = false, $passKey = null)
   public function cek_miskonsepsi($jawaban, $is_jawaban, $alasan, $is_alasan)
   {
     if($jawaban == 1) {
-        if($is_jawaban = 1) {
+        if($is_jawaban == 1) {
             if($alasan == 1) {
                 if($is_alasan == 1) {
                     $is_miskonsepsi = "Paham";
