@@ -4,12 +4,12 @@
 		title='set alasan benar'
 		class='fa fa-check' 
 		style='cursor:pointer;' 
-		id='set_benar{{ $list->id }}'
+		id='set_alasan_benar{{ $list->id }}'
 	></i>
 
 
 	<script type="text/javascript">
-	$('#set_benar{{ $list->id }}').click(function(){
+	$('#set_alasan_benar{{ $list->id }}').click(function(){
 			$.ajax({
 				url : '{{ route("backend.quiz.manage_soal.set_alasan_benar") }}',
 				data : {id : '{{ $list->id }}', _token : '{!! csrf_token() !!}' },
@@ -36,12 +36,12 @@
 	data-toggle='tooltip'
 	title='edit alasan'
 	class='fa fa-pencil-square' 
-	id='edit{{ $list->id }}' 
+	id='edit_alasan{{ $list->id }}' 
 	style='cursor:pointer;'
 ></i>
 
 <script type="text/javascript">
-$('#edit{{ $list->id}}').click(function(){
+$('#edit_alasan{{ $list->id }}').click(function(){
 	$('.modal-body').html('loading... <i class="fa fa-spinner fa-spin"></i>');
 	$('.modal-body').load('{{ route("backend.quiz.manage_soal.edit_alasan", [Request::segment(5), Request::segment(6), $list->id]) }}');
 });
@@ -58,9 +58,9 @@ $('#edit{{ $list->id}}').click(function(){
 
 
 
-<i class='fa fa-times' style='cursor:pointer;' id='del{{ $list->id }}'></i>
+<i class='fa fa-times' style='cursor:pointer;' id='del_alasan{{ $list->id }}'></i>
 <script type="text/javascript">
-$('#del{{ $list->id }}').click(function(){
+$('#del_alasan{{ $list->id }}').click(function(){
 	swal({
 		title : 'are you sure?',
 		type : 'warning',
