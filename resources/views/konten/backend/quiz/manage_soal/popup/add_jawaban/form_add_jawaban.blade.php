@@ -13,19 +13,26 @@
 
 		<div style="display: none;" id="form_tambah_jawaban">
 			<div id="pesan"></div>
-
-			<div class="form-group">
-				{!! Form::label('jawaban', 'Isi Konten Soal : ') !!}
-				{!! Form::text('jawaban', '', ['class' => 'form-control', 'placeholder' => 'jawaban soal...']) !!}
-			</div>
-			<div class="form-group">
-				{!! Form::label('is_benar', 'Benar/Salah : ') !!}
-				{!! Form::select('is_benar', [1 => 'benar', 0 => 'salah'], 0, ['class' => 'form-control', 'id' => 'is_benar']) !!}
-			</div>
-			<div class="form-group">
-				<button id='simpan' class='btn btn-info'><i class='fa fa-floppy-o'></i> SIMPAN</button>
-				<button id='cancel' class='btn btn-danger'><i class='fa fa-times'></i> BATAL</button>
-			</div>			
+			<form action="" enctype="multipart/form-data">
+				{{ csrf_field() }}
+				{!! Form::hidden('mst_soal_id', Request::segment(6)) !!}
+				<div class="form-group">
+					{!! Form::label('jawaban', 'Isi Konten Soal : ') !!}
+					{!! Form::text('jawaban', '', ['class' => 'form-control', 'placeholder' => 'jawaban soal...']) !!}
+				</div>
+				<div class="form-group">
+					{!! Form::label('is_benar', 'Benar/Salah : ') !!}
+					{!! Form::select('is_benar', [1 => 'benar', 0 => 'salah'], 0, ['class' => 'form-control', 'id' => 'is_benar']) !!}
+				</div>
+				<div class="form-group">
+					{!! Form::label('gambar_jawaban', 'Tambahkan Gambar ') !!}
+					{!! Form::file('gambar_jawaban', ['id' => 'gambar_jawaban', 'class' => 'form-control']) !!}
+				</div>
+				<div class="form-group">
+					<button type="submit" id='simpan' class='btn btn-info'><i class='fa fa-floppy-o'></i> SIMPAN</button>
+					<button id='cancel' class='btn btn-danger'><i class='fa fa-times'></i> BATAL</button>
+				</div>
+			</form>
 		</div>
 
 		<button class="btn btn-info" id="create_jawaban">
@@ -46,7 +53,7 @@
 <hr>
 @if(Session::has('pesan_sukses_alasan'))
 	<div class="alert alert-success alert-dismissible" role="alert">
-		 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>	
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>	
 		{!! Session::get('pesan_sukses_alasan') !!}
 	</div>
 @endif

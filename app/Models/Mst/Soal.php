@@ -101,7 +101,4 @@ class Soal extends Eloquent{
         return $status;
     }
 
- 
-
-
 }

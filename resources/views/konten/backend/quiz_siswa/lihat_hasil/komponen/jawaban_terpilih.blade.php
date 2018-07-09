@@ -15,7 +15,7 @@ Jawaban yang dipilih :
 		</div>
 	@else 
 		<div class="alert alert-danger">
-			{!! $jawaban->mst_jawaban_soal->jawaban !!}	- SALAH	{!! $keyakinan !!}
+			{!! $jawaban->mst_jawaban_soal->jawaban !!} - SALAH	{!! $keyakinan !!}
 		</div>
 	@endif
 @else

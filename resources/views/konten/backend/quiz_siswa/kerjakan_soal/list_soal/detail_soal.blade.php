@@ -19,6 +19,9 @@
 			<li>  
 				@include($base_view.'kerjakan_soal.list_soal.checkbox_jawaban')
 				{!! $fungsi->toAlpha($i).'. '.$list_jawaban->jawaban !!}
+				<br>
+				<img src="{{ asset('gambar_jawaban').'/'.$list_jawaban->gambar_jawaban }}" class="img-fluid mx-auto d-block" alt='{{ $list_jawaban->gambar_jawaban }}' >
+				<br>
 			</li>
 			<?php $i++; ?>
 		@endforeach

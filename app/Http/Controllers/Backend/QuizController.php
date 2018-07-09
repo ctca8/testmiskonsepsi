@@ -220,7 +220,7 @@ class QuizController extends Controller
      */
     public function manage_soal_insert(createSoalRequest $request)
     {
-        // // proses upload gambar_soal
+        // proses upload gambar_soal
         $gambar_soal = time().'.'.$request->gambar_soal->getClientOriginalExtension();
         $request->gambar_soal->move(public_path('gambar_soal'), $gambar_soal);
         
@@ -287,21 +287,74 @@ class QuizController extends Controller
     public function manage_soal_insert_jawaban(createJawabanSoal $request)
     {
         \Session::flash('pesan_sukses', 'Jawaban telah berhasil ditambahkan');
-        $insert_jawaban = $this->jawaban_soal->create($request->except('_token'));
+        // $insert_jawaban = $this->jawaban_soal->create($request->except('_token'));
 
-        if($request->is_benar == 1){
-            $all_js = $this->jawaban_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
-            foreach($all_js as $list){
-                $list->is_benar = 0;
-                $list->save();
+        // if($request->is_benar == 1){
+        //     $all_js = $this->jawaban_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+        //     foreach($all_js as $list){
+        //         $list->is_benar = 0;
+        //         $list->save();
+        //     }
+        //     $js = $this->jawaban_soal->findOrFail($insert_jawaban->id);
+        //     $js->is_benar = 1;
+        //     $js->save();
+        // }
+
+        // return $insert_jawaban;
+
+        
+                // proses menyimpan gambar ke database
+        if($request->hasFile('gambar_jawaban')) {
+            // proses upload gambar_soal
+            $gambar_jawaban = time().'.'.$request->gambar_jawaban->getClientOriginalExtension();
+            $request->gambar_jawaban->move(public_path('gambar_jawaban'), $gambar_jawaban);
+
+            // insert dengan gambar
+            $insert = $this->jawaban_soal->create([
+                'mst_soal_id' => $request->mst_soal_id,
+                'jawaban' => $request->jawaban,
+                'gambar_jawaban' => $gambar_jawaban,
+                'is_benar' => $request->is_benar,
+            ]);
+
+            // mengubah kunci jawaban
+            if($request->is_benar == 1){
+                $all_js = $this->jawaban_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+                foreach($all_js as $list){
+                    $list->is_benar = 0;
+                    $list->save();
+                }
+                $js = $this->jawaban_soal->findOrFail($insert_jawaban->id);
+                $js->is_benar = 1;
+                $js->save();
             }
-            $js = $this->jawaban_soal->findOrFail($insert_jawaban->id);
-            $js->is_benar = 1;
-            $js->save();
+
+            return $insert;
+            // return response()->json(['success'=>'Berhasil', 'gambar jawaban' => $gambar_jawaban]);
+        } else {
+            // insert tanpa gambar
+            $insert = $this->jawaban_soal->create([
+                'mst_soal_id' => $request->mst_soal_id,
+                'jawaban' => $request->jawaban,
+                'is_benar' => $request->is_benar,
+            ]);
+
+            // mengubah kunci jawaban
+            if($request->is_benar == 1){
+                $all_js = $this->jawaban_soal->where('mst_soal_id', '=', $request->mst_soal_id)->get();
+                foreach($all_js as $list){
+                    $list->is_benar = 0;
+                    $list->save();
+                }
+                $js = $this->jawaban_soal->findOrFail($insert_jawaban->id);
+                $js->is_benar = 1;
+                $js->save();
+            }
+
+            return $insert;
+            // return response()->json(['success'=>'Berhasil']);
         }
 
-
-        return $insert_jawaban;
     }
 
 

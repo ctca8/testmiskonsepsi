@@ -4,13 +4,13 @@
 <ol start="{!! $i !!}">
 	
 	@foreach($soal as $list)
-		{{-- mengambil jawaban siswa berdasarkan id_soal dan id_user	 --}}
-		<?php $jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id) ?>
+		{{-- mengambil jawaban siswa berdasarkan id_soal dan id_user --}}
+		<?php $jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id); ?>
 		{{-- mengambil alasan siswa berdasarkan id_soal dan id_user --}}
-		<?php $alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id) ?>
+		<?php $alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id); ?>
 
 	<li style="font-size:15px">
-		{!! $list->soal !!} 
+		{!! $list->soal !!}
 	</li>
 	<br> 
 	 	<ul class="list-unstyled" style="margin-left : 2em;">
