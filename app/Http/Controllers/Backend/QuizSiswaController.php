@@ -17,6 +17,7 @@ use App\Models\Mst\Soal;
 use App\Models\Mst\TopikSoal;
 use App\Models\Ref\Kelas;
 use Illuminate\Http\Request;
+use PDF;
 
 class QuizSiswaController extends Controller
 {
@@ -154,6 +155,7 @@ class QuizSiswaController extends Controller
      * GET halaman untuk menampilkan hasil setelah mengerjakan
      * @param  [type] $mst_topik_soal_id [description]
      * @return [type]                    [description]
+     * FIXME: error saat ada soal yang belum dikerjakan
      */
     public function lihat_hasil($mst_topik_soal_id)
     {
@@ -186,6 +188,23 @@ class QuizSiswaController extends Controller
         return view($this->base_view.'lihat_hasil_nilai.index', $vars);
     }
 
+    /**
+     * Mencetak hasil ujian siswa
+     */
+    public function cetak_hasil_nilai($mst_topik_soal_id)
+    {
+        $soal = $this->soal
+                     ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
+                     ->paginate(5);
+        $fungsi = $this->fungsi;
+        $lihat_hasil = true;
+        $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
+        $total_jawaban_benar = $this->jawaban_siswa->total_jawaban_benar(\Auth::user()->id, $mst_topik_soal_id);
+        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil', 'total_jawaban_benar');
+        
+        $pdf = PDF::loadView($this->base_view.'lihat_hasil.cetak_hasil', $vars);
+        return $pdf->download('lihat_hasil.pdf');
+    }
 
     /**
      * POST submit jawaban per soal

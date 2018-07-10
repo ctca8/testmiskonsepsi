@@ -148,8 +148,9 @@ return [
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
-        UxWeb\SweetAlert\SweetAlertServiceProvider::class
-
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -206,6 +207,8 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class, 
         'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
         'Alert'     => UxWeb\SweetAlert\SweetAlert::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
 
     ],
 

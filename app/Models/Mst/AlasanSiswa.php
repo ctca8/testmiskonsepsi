@@ -3,7 +3,7 @@
 namespace App\Models\Mst;
 
 use App\Models\Mst\Soal;
-use App\Models\MSt\AlasanSoal;
+use App\Models\Mst\AlasanSoal;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class AlasanSiswa extends Eloquent {

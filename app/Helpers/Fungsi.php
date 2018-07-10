@@ -315,7 +315,7 @@ public function alphaID($in, $to_num = false, $pad_up = false, $passKey = null)
    * apakah jawaban siswa miskonsepsi atau tidak
    * 
    * parameter yang diminta adalah jawaban, keyakinan jawaban, alasan, keyakinan alasan
-   * nilai kembalian berupa string 
+   * nilai kembalian berupa string
    */
   public function cek_miskonsepsi($jawaban, $is_jawaban, $alasan, $is_alasan)
   {
@@ -374,6 +374,7 @@ public function alphaID($in, $to_num = false, $pad_up = false, $passKey = null)
     } // end of decision
 
     return $is_miskonsepsi;
+    
   }
       
 } // end class

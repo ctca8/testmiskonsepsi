@@ -50,7 +50,11 @@ Route::group(['middleware' => ['auth', 'hanya_siswa']], function(){
 		'as'	=> 'backend.quiz_siswa.lihat_hasil_nilai',
 		'uses'	=> 'QuizSiswaController@lihat_hasil_nilai',
 	]);
- 
+
+	get('quiz_siswa/cetak_hasil_nilai/{mst_topik_soal_id}', [
+		'as'	=> 'backend.quiz_siswa.cetak_hasil_nilai',
+		'uses'	=> 'QuizSiswaController@cetak_hasil_nilai',
+	]);
  
  	post('quiz_siswa/submit_jawaban', [
 		'as'	=> 'backend.quiz_siswa.submit_jawaban',

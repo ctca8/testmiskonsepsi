@@ -48,9 +48,8 @@ class QuizController extends Controller
         $this->jawaban_soal = $jawaban_soal;
         $this->alasan_soal = $alasan_soal;
     	$this->user = $user;
-    	$this->topik_soal = $topik_soal;
+        $this->topik_soal = $topik_soal;
     }
-
 
     /**
      * menampilkan semua daftar topik
@@ -64,7 +63,7 @@ class QuizController extends Controller
                            ->where('mst_user_id', '=', \Auth::user()->id)
                            ->paginate(10);
         $vars = compact('topik_quiz');
-    	return view($this->base_view.'index', $vars);
+        return view($this->base_view.'index', $vars);
     }
 
     /**
