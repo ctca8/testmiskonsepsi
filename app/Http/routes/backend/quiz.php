@@ -114,6 +114,21 @@ Route::group(['middleware' => ['auth']], function(){
 		'uses'	=> 'QuizController@manage_siswa_view_nilai',
 	]);
 
+	/**
+	 * lihat detail pekerjaan siswa
+	 */
+	get('quiz/manage_siswa/view_nilai/manage_siswa_detail_nilai/{mst_topik_soal_id}/{id_siswa}', [
+		'as'	=> 'backend.quiz.manage_siswa.view_siswa_detail_nilai',
+		'uses'	=> 'QuizController@manage_siswa_detail_nilai',
+	]);
+
+	/**
+	 * lihat detail nilai siswa
+	 */
+	get('quiz/manage_siswa/view_nilai/manage_siswa_hasil_nilai/{mst_topik_soal_id}/{id_siswa}', [
+		'as'	=> 'backend.quiz.manage_siswa.view_siswa_hasil_nilai',
+		'uses'	=> 'QuizController@manage_siswa_hasil_nilai',
+	]);
 
 
 	/** kelola Alasan */

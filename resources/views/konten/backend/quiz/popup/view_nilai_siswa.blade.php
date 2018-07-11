@@ -9,6 +9,7 @@
 			<th>Nama Siswa</th>
 			<th width="100px">Jwb Benar</th>
 			<th width="50px">Nilai</th>
+			<th width="50px">Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,6 +34,11 @@
 							0 
 						@endif							
 					</span>
+				</td>
+				<td>
+					<a href="{!! route('backend.quiz.manage_siswa.view_siswa_detail_nilai', [Request::segment(5), $list->mst_user->id]) !!}" class="btn btn-info pull-right"> 
+						<i class='fa fa-bar-chart'></i> Detail
+					</a>
 				</td>
 			</tr>
  		@endforeach	

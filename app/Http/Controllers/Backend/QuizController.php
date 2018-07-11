@@ -302,7 +302,7 @@ class QuizController extends Controller
         // return $insert_jawaban;
 
         
-                // proses menyimpan gambar ke database
+        // proses menyimpan gambar ke database
         if($request->hasFile('gambar_jawaban')) {
             // proses upload gambar_soal
             $gambar_jawaban = time().'.'.$request->gambar_jawaban->getClientOriginalExtension();
@@ -545,8 +545,8 @@ class QuizController extends Controller
      * @return [type]                    [description]
      */
     public function manage_siswa_view_nilai($mst_topik_soal_id, 
-                                            KelasUser $kelas_user, 
-                                            JawabanSiswa $jawaban_siswa,  
+                                            KelasUser $kelas_user,
+                                            JawabanSiswa $jawaban_siswa,
                                             Fungsi $fungsi
                                             )
     {
@@ -556,5 +556,38 @@ class QuizController extends Controller
         return view($this->base_view.'popup.view_nilai_siswa', $vars);
     }
 
+    /**
+     * GET action untuk melihat detail pekerjaan siswa
+     * beserta ringkasan nilainya
+     */
+    public function manage_siswa_detail_nilai($mst_topik_soal_id, $id_siswa, Fungsi $fungsi, JawabanSiswa $jawaban_siswa)
+    {
+        $user = $this->user->findOrFail($id_siswa);
+        $soal = $this->soal
+                     ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
+                     ->paginate(5);
+        $lihat_hasil = true;
+        $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
+        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil', 'user');
+        return view($this->base_view.'lihat_hasil.index', $vars);
+    }
+
+    /**
+     * GET halaman untuk menampilkan nilai siswa
+     * @param  [type] $mst_topik_soal_id [description]
+     * @return [type]                    [description]
+     */
+    public function manage_siswa_hasil_nilai($mst_topik_soal_id, $id_siswa, Fungsi $fungsi, JawabanSiswa $jawaban_siswa)
+    {
+        $siswa = $this->user->findOrFail($id_siswa);
+        $soal = $this->soal
+                     ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
+                     ->get();
+        $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
+        $lihat_hasil_nilai = true;
+        $total_jawaban_benar = $jawaban_siswa->total_jawaban_benar($id_siswa, $mst_topik_soal_id);
+        $vars = compact('soal', 'lihat_hasil_nilai', 'fungsi', 'topik_soal', 'total_jawaban_benar', 'siswa'); 
+        return view($this->base_view.'lihat_hasil_nilai.index', $vars);
+    }
 
 }
