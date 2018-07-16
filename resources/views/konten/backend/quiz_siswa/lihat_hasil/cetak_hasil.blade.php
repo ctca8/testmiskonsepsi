@@ -58,7 +58,7 @@
                     <li @if($list_jawaban->is_benar == 1) style="color: Green;"  @endif >
                         {!! $list_jawaban->jawaban !!} <br>
                         @if(isset($list_jawaban->gambar_jawaban))
-                            <img src="{{ public_path('gambar_jawaban').'/'.$list_jawaban->gambar_jawaban }}" alt='{{ $list_jawaban->gambar_jawaban }}' style="width:250px;">
+                            <img src="{{ public_path('gambar_jawaban').'/'.$list_jawaban->gambar_jawaban }}" alt='{{ $list_jawaban->gambar_jawaban }}' style="width:150px;">
                         @endif
                     </li>
                 @endforeach 		
@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-md-6">
                 <?php $jawaban= $jawaban->jawaban_siswa($list->id, \Auth::user()->id) ?>
-                @include($base_view.'lihat_hasil.komponen.jawaban_terpilih')
+                @include($base_view.'lihat_hasil.komponen_cetak.jawaban_terpilih')
             </div>
         </div>
         <br>
@@ -83,7 +83,7 @@
         <div class="row">
             <div class="col-md-6">
                 <?php $alasan= $alasan->alasan_siswa($list->id, \Auth::user()->id) ?>
-                @include($base_view.'lihat_hasil.komponen.alasan_terpilih')
+                @include($base_view.'lihat_hasil.komponen_cetak.alasan_terpilih')
             </div>
         </div>
 

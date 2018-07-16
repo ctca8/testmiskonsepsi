@@ -15,14 +15,14 @@ Jawaban yang dipilih : {{ count($jawaban) }}
 		<div style="color: Green;">
 			{!! $jawaban->mst_jawaban_soal->jawaban !!} - BENAR {!! $keyakinan !!} <br>
 			@if(isset($jawaban->mst_jawaban_soal->gambar_jawaban))
-				<img src="{{ asset('gambar_jawaban').'/'.$jawaban->mst_jawaban_soal->gambar_jawaban }}" alt='{{ $jawaban->mst_jawaban_soal->gambar_jawaban }}' style="width:150px;">
+				<img src="{{ public_path('gambar_jawaban').'/'.$jawaban->mst_jawaban_soal->gambar_jawaban }}" alt='{{ $jawaban->mst_jawaban_soal->gambar_jawaban }}' style="width:150px;">
 			@endif
 		</div>
 	@else 
 		<div style="color: red;">
 			{!! $jawaban->mst_jawaban_soal->jawaban !!} - SALAH	{!! $keyakinan !!} <br>
 			@if(isset($jawaban->mst_jawaban_soal->gambar_jawaban))
-				<img src="{{ asset('gambar_jawaban').'/'.$jawaban->mst_jawaban_soal->gambar_jawaban }}" alt='{{ $jawaban->mst_jawaban_soal->gambar_jawaban }}' style="width:150px;">
+				<img src="{{ public_path('gambar_jawaban').'/'.$jawaban->mst_jawaban_soal->gambar_jawaban }}" alt='{{ $jawaban->mst_jawaban_soal->gambar_jawaban }}' style="width:150px;">
 			@endif
 		</div>
 	@endif
