@@ -5,4 +5,5 @@ Homestead.json
 .env
 Envoy.blade.php
 /public/gambar_soal
+/public/gambar_jawaban
 vscode_ujianonline.code-workspace

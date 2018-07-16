@@ -63,11 +63,17 @@
 	@foreach($soal as $list)
 		<?php 
 			// mengambil jawaban siswa berdasarkan id_soal dan id_user
-			$jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id);
+			$jawaban = $jawaban->jawaban_siswa($list->id, \Auth::user()->id);
 			// mengambil alasan siswa berdasarkan id_soal dan id_user
-			$alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id);
+			$alasan = $alasan->alasan_siswa($list->id, \Auth::user()->id);
+
 			// untuk mengecek apakah jawaban siswa miskonsepsi atau tidak
-			$miskonsepsi = $fungsi->cek_miskonsepsi($jawaban->mst_jawaban_soal->is_benar, $jawaban->is_yakin, $alasan->mst_alasan_soal->is_benar, $alasan->is_yakin);
+			if (count($jawaban)>0 || count($alasan)>0) {
+				$miskonsepsi = $fungsi->cek_miskonsepsi($jawaban->mst_jawaban_soal->is_benar, $jawaban->is_yakin, $alasan->mst_alasan_soal->is_benar, $alasan->is_yakin);
+			} else {
+				//nilai default jika tidak dikerjakan
+				$miskonsepsi = "belum mengerjakan";
+			}
 
 			if ($miskonsepsi == "Paham") {
 				$is_paham++;
@@ -75,7 +81,7 @@
 				$is_tidakpaham++;
 			} elseif ($miskonsepsi == "Miskonsepsi/Error") {
 				$is_error++;
-			} else {
+			} elseif ($miskonsepsi == "Miskonsepsi") {
 				$is_miskonsepsi++;
 			}
 		?>

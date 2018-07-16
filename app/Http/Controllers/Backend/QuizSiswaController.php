@@ -155,17 +155,18 @@ class QuizSiswaController extends Controller
      * GET halaman untuk menampilkan hasil setelah mengerjakan
      * @param  [type] $mst_topik_soal_id [description]
      * @return [type]                    [description]
-     * FIXME: error saat ada soal yang belum dikerjakan
      */
     public function lihat_hasil($mst_topik_soal_id)
     {
         $soal = $this->soal
                      ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
                      ->paginate(5);
+        $jawaban = $this->jawaban_siswa;
+        $alasan = $this->alasan_siswa;
         $fungsi = $this->fungsi;
         $lihat_hasil = true;
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
-        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil');
+        $vars = compact('soal', 'jawaban', 'alasan', 'fungsi', 'topik_soal', 'lihat_hasil');
         return view($this->base_view.'lihat_hasil.index', $vars);
     }
 
@@ -180,11 +181,13 @@ class QuizSiswaController extends Controller
         $soal = $this->soal
                      ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
                      ->get();
+        $jawaban = $this->jawaban_siswa;
+        $alasan = $this->alasan_siswa;
         $fungsi = $this->fungsi;
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
         $lihat_hasil_nilai = true;
         $total_jawaban_benar = $this->jawaban_siswa->total_jawaban_benar(\Auth::user()->id, $mst_topik_soal_id);
-        $vars = compact('soal', 'lihat_hasil_nilai', 'fungsi', 'topik_soal', 'total_jawaban_benar'); 
+        $vars = compact('soal', 'jawaban', 'alasan', 'lihat_hasil_nilai', 'fungsi', 'topik_soal', 'total_jawaban_benar'); 
         return view($this->base_view.'lihat_hasil_nilai.index', $vars);
     }
 
@@ -195,15 +198,17 @@ class QuizSiswaController extends Controller
     {
         $soal = $this->soal
                      ->where('mst_topik_soal_id', '=', $mst_topik_soal_id)
-                     ->paginate(5);
+                     ->get();
+        $jawaban = $this->jawaban_siswa;
+        $alasan = $this->alasan_siswa;
         $fungsi = $this->fungsi;
         $lihat_hasil = true;
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
         $total_jawaban_benar = $this->jawaban_siswa->total_jawaban_benar(\Auth::user()->id, $mst_topik_soal_id);
-        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil', 'total_jawaban_benar');
+        $vars = compact('soal', 'jawaban', 'alasan', 'fungsi', 'topik_soal', 'lihat_hasil', 'total_jawaban_benar');
         
         $pdf = PDF::loadView($this->base_view.'lihat_hasil.cetak_hasil', $vars);
-        return $pdf->download('lihat_hasil.pdf');
+        return $pdf->stream('lihat_hasil.pdf');
     }
 
     /**

@@ -14,7 +14,7 @@
             page-break-after: always;
         }
 
-         table {
+        table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
@@ -34,90 +34,90 @@
 </head>
 <body>
     <h3>Hasil Pengerjaan Tugas / Soal</h3>
-    <h4>Nama Siswa: {!! \Auth::user()->nama !!}</h4>
-    <h4>Topik Quiz: {!! $topik_soal->nama !!}</h4>
+    <p>Nama Siswa: {!! \Auth::user()->nama !!}</p>
+    <p>Topik Quiz: {!! $topik_soal->nama !!}</p>
+    <hr>
 
-    <?php $i = $soal->firstItem(); ?>
-
-    <ol start="{!! $i !!}">
-        <?php
-            $is_miskonsepsi = 0;
-            $is_paham = 0;
-            $is_tidakpaham = 0;
-            $is_error = 0;
-        ?>
+    <?php
+        $is_miskonsepsi = 0;
+        $is_paham = 0;
+        $is_tidakpaham = 0;
+        $is_error = 0;
+    ?>
+    <ol type="1">
         @foreach($soal as $list)
-            {{-- mengambil jawaban siswa berdasarkan id_soal dan id_user --}}
-            <?php $jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id); ?>
-            {{-- mengambil alasan siswa berdasarkan id_soal dan id_user --}}
-            <?php $alasan = $list->mst_alasan_siswa->alasan_siswa($list->id, \Auth::user()->id); ?>
-
         <li style="font-size:15px">
-            {!! $list->soal !!}
+            {!! $list->soal !!} <br>
+            @if(isset($list->gambar_soal))
+                <img src="{{ public_path('gambar_soal').'/'.$list->gambar_soal }}" alt='{{ $list->gambar_soal }}' style="width:250px;">
+            @endif
         </li>
         <br> 
-            <ul style="margin-left : 2em;">
-            <?php $no=1; ?>
+            <ol type="a">
                 @foreach($list->mst_jawaban_soal as $list_jawaban)
-                    <li @if($list_jawaban->is_benar == 1) class="text-success"  @endif >
-                        {!! $fungsi->toAlpha($no).'. '.$list_jawaban->jawaban !!}
-                    </li> 
-                    <?php $no++; ?>
+                    <li @if($list_jawaban->is_benar == 1) style="color: Green;"  @endif >
+                        {!! $list_jawaban->jawaban !!} <br>
+                        @if(isset($list_jawaban->gambar_jawaban))
+                            <img src="{{ public_path('gambar_jawaban').'/'.$list_jawaban->gambar_jawaban }}" alt='{{ $list_jawaban->gambar_jawaban }}' style="width:250px;">
+                        @endif
+                    </li>
                 @endforeach 		
-            </ul>
+            </ol>
 
         <div class="row">
             <div class="col-md-6">
+                <?php $jawaban= $jawaban->jawaban_siswa($list->id, \Auth::user()->id) ?>
                 @include($base_view.'lihat_hasil.komponen.jawaban_terpilih')
             </div>
         </div>
         <br>
 
-            <ul style="margin-left : 2em;">
-            <?php $no=1; ?>
+            <ol type="a">
             @foreach($list->mst_alasan_soal as $list_alasan)
-                <li @if($list_alasan->is_benar == 1) class="text-success"  @endif >
-                    {!! $fungsi->toAlpha($no).'. '.$list_alasan->alasan !!}
-                </li> 
-                <?php $no++; ?>
+                <li @if($list_alasan->is_benar == 1) style="color: Green;"  @endif >
+                    {!! $list_alasan->alasan !!}
+                </li>
             @endforeach 		
-            </ul>
+            </ol>
 
         <div class="row">
             <div class="col-md-6">
-                @include($base_view.'lihat_hasil.komponen.alasan_terpilih')		
+                <?php $alasan= $alasan->alasan_siswa($list->id, \Auth::user()->id) ?>
+                @include($base_view.'lihat_hasil.komponen.alasan_terpilih')
             </div>
         </div>
 
-        <?php 
-            // mengecek apakah jawaban siswa miskonsepsi atau tidak
-            $miskonsepsi = $fungsi->cek_miskonsepsi($jawaban->mst_jawaban_soal->is_benar, $jawaban->is_yakin, $alasan->mst_alasan_soal->is_benar, $alasan->is_yakin);
-            
-            if ($miskonsepsi == "Paham") {
-				$is_paham++;
-			} elseif ($miskonsepsi == "Tidak Paham Konsep") {
-				$is_tidakpaham++;
-			} elseif ($miskonsepsi == "Miskonsepsi/Error") {
-				$is_error++;
-			} else {
-				$is_miskonsepsi++;
-			}
-        ?>
         <div class="row">
             <div class="col-md-6">
-                <div class="alert alert-success">
-                    <h3 style="text-align: center" >{!! $miskonsepsi !!}</h3>
+                @if(count($jawaban)>0 || count($alasan)>0)
+                    <?php 
+                        // untuk mengecek apakah jawaban siswa miskonsepsi atau tidak
+                        $miskonsepsi = $fungsi->cek_miskonsepsi($jawaban->mst_jawaban_soal->is_benar, $jawaban->is_yakin, $alasan->mst_alasan_soal->is_benar, $alasan->is_yakin);
+   
+                        if ($miskonsepsi == "Paham") {
+                            $is_paham++;
+                        } elseif ($miskonsepsi == "Tidak Paham Konsep") {
+                            $is_tidakpaham++;
+                        } elseif ($miskonsepsi == "Miskonsepsi/Error") {
+                            $is_error++;
+                        } else {
+                            $is_miskonsepsi++;
+                        }
+                    ?>
+                    <div class="alert alert-success" style="background-color:DodgerBlue;">
+                        <h3 style="text-align: center" >{!! $miskonsepsi !!}</h3>
+                @else 
+                    <?php $miskonsepsi = "belum mengerjakan"; ?>
+                    <div class="alert alert-danger" style="background-color:Red;">
+                        <h3 style="text-align: center" >Belum Mengerjakan Soal</h3>
+                @endif
+                    </div>
                 </div>
             </div>
-        </div>
         <hr>
-
-        <?php $i++; ?>
         @endforeach
 
     </ol>
-
-    {!! $soal->render() !!}
 
     <div class="page-break"></div>
 

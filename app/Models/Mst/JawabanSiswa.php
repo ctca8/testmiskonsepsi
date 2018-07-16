@@ -25,6 +25,7 @@ class JawabanSiswa extends Eloquent{
 
     /**
      * mencari jawaban siswa berdasarkan id_soal dan id_user
+     * FIXME: method first() akan bermasalah jika tidak ada data jawaban di database
      */
     public function jawaban_siswa($mst_soal_id, $mst_user_id){
         $jawaban_siswa = $this

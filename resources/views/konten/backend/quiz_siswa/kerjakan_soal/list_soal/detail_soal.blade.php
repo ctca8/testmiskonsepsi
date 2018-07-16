@@ -13,7 +13,6 @@
 	}
 	?>
 
-
 	<div id="jawaban_soal{!! $list->id !!}">
 		@foreach($all_jawaban as $list_jawaban)
 			<li>  

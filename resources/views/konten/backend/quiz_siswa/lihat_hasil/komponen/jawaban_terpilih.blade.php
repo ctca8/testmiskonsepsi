@@ -1,5 +1,7 @@
-<?php //$jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id) ?>
-Jawaban yang dipilih :
+{{-- mengambil jawaban siswa berdasarkan id_soal dan id_user --}}
+<?php //$jawaban = $list->mst_jawaban_siswa->jawaban_siswa($list->id, \Auth::user()->id); ?>
+
+Jawaban yang dipilih : {{ count($jawaban) }}
 <br>
 @if(count($jawaban)>0)
 	{{-- untuk menampilkan keyakinan dari jawaban yang dipilih --}}
@@ -10,16 +12,16 @@ Jawaban yang dipilih :
 	@endif
 
 	@if($jawaban->mst_jawaban_soal->is_benar == 1 )
-		<div class="alert alert-success">
+		<div style="color: Green;">
 			{!! $jawaban->mst_jawaban_soal->jawaban !!} - BENAR {!! $keyakinan !!}
 		</div>
 	@else 
-		<div class="alert alert-danger">
+		<div style="color: red;">
 			{!! $jawaban->mst_jawaban_soal->jawaban !!} - SALAH	{!! $keyakinan !!}
 		</div>
 	@endif
 @else
-	<div class="alert alert-danger">
+	<div style="color: red;">
 		belum memilih jawaban
 	</div>
 @endif
