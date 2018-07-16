@@ -29,7 +29,6 @@ class AlasanSiswa extends Eloquent {
 
     /**
      * mencari alasan siswa berdasarkan id_soal dan id_user
-     * FIXME: saat data kosong/tidak ditemukan maka akan eror
      */
     public function alasan_siswa($mst_soal_id, $mst_user_id){
         $jawaban_siswa = $this

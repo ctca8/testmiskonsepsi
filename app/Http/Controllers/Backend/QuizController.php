@@ -10,6 +10,7 @@ use App\Http\Requests\Quiz\createAlasanSoal;
 use App\Http\Requests\Quiz\createSoalRequest;
 use App\Http\Requests\Quiz\createTopikQuizRequest;
 use App\Models\Mst\JawabanSiswa;
+use App\Models\Mst\AlasanSiswa;
 use App\Models\Mst\JawabanSoal;
 use App\Models\Mst\AlasanSoal;
 use App\Models\Mst\KelasUser;
@@ -558,9 +559,13 @@ class QuizController extends Controller
 
     /**
      * GET action untuk melihat detail pekerjaan siswa
-     * beserta ringkasan nilainya
+     * beserta jawaban yang dipilih
      */
-    public function manage_siswa_detail_nilai($mst_topik_soal_id, $id_siswa, Fungsi $fungsi, JawabanSiswa $jawaban_siswa)
+    public function manage_siswa_detail_nilai($mst_topik_soal_id,
+                                                $id_siswa, 
+                                                Fungsi $fungsi, 
+                                                JawabanSiswa $jawaban_siswa,
+                                                AlasanSiswa $alasan_siswa)
     {
         $user = $this->user->findOrFail($id_siswa);
         $soal = $this->soal
@@ -568,16 +573,19 @@ class QuizController extends Controller
                      ->paginate(5);
         $lihat_hasil = true;
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
-        $vars = compact('soal', 'fungsi', 'topik_soal', 'lihat_hasil', 'user');
+        $vars = compact('soal', 'jawaban_siswa', 'alasan_siswa', 'fungsi', 'topik_soal', 'lihat_hasil', 'user');
         return view($this->base_view.'lihat_hasil.index', $vars);
     }
 
     /**
-     * GET halaman untuk menampilkan nilai siswa
-     * @param  [type] $mst_topik_soal_id [description]
-     * @return [type]                    [description]
+     * GET action untuk menampilkan nilai siswa
+     * dan ringkasan jumlah miskonsepsi
      */
-    public function manage_siswa_hasil_nilai($mst_topik_soal_id, $id_siswa, Fungsi $fungsi, JawabanSiswa $jawaban_siswa)
+    public function manage_siswa_hasil_nilai($mst_topik_soal_id, 
+                                                $id_siswa, 
+                                                Fungsi $fungsi, 
+                                                JawabanSiswa $jawaban_siswa,
+                                                AlasanSiswa $alasan_siswa)
     {
         $siswa = $this->user->findOrFail($id_siswa);
         $soal = $this->soal
@@ -586,7 +594,7 @@ class QuizController extends Controller
         $topik_soal = $this->topik_soal->findOrFail($mst_topik_soal_id);
         $lihat_hasil_nilai = true;
         $total_jawaban_benar = $jawaban_siswa->total_jawaban_benar($id_siswa, $mst_topik_soal_id);
-        $vars = compact('soal', 'lihat_hasil_nilai', 'fungsi', 'topik_soal', 'total_jawaban_benar', 'siswa'); 
+        $vars = compact('soal', 'jawaban_siswa', 'alasan_siswa', 'lihat_hasil_nilai', 'fungsi', 'topik_soal', 'total_jawaban_benar', 'siswa'); 
         return view($this->base_view.'lihat_hasil_nilai.index', $vars);
     }
 

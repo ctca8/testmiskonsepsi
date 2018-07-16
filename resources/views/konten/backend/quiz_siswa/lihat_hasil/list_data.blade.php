@@ -10,7 +10,8 @@
 		<img src="{{ asset('gambar_soal').'/'.$list->gambar_soal }}" class="img-fluid mx-auto d-block" alt='{{ $list->gambar_soal }}' >
 	</li>
 	<br>
-	 	<ol type="a">
+		 
+		<ol type="a">
 			@foreach($list->mst_jawaban_soal as $list_jawaban)
 				<li @if($list_jawaban->is_benar == 1) class="text-success"  @endif >
 					{!! $list_jawaban->jawaban !!} <br>
