@@ -14,11 +14,10 @@
      Sistem Informasi</h1>
 
     <h1 class="landing_text_utama animated fadeInRight">
-     Bank Soal & Ujian Online</h1>
+     Ujian Online & Tes Miskonsepsi</h1>
 
 <p class="animated fadeInUp">
-      The safest and easiest way for educators to connect and collaborate with students, 
-      parents, and each other.		
+      Cara asik untuk mengerjakan ujian dan Tes diagnostik. Memungkinkan guru dan siswa untuk berkolaborasi.
 </p>
 
 </div>
